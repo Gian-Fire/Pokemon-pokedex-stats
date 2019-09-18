@@ -11,7 +11,7 @@ function App() {
     .then(res => res.json())
     .then(pokemon => pokemon.results.filter(pocketMonster => pocketMonster.name === Catch))
     .then(filteredPokemon => setPocketMonster(filteredPokemon[0]))
-    .then(selectedPokemon => selectedPokemon.url)
+    // .then(selectedPokemon => selectedPokemon.url)
     //trying to go into that url then 
     // do the same but display all stats in the new object
     // url => new obj. find stats array
@@ -23,17 +23,19 @@ function App() {
     <>
       <Title>Pokemon</Title>
 
-          <Input
-            type='text'
-            placeholder='Pokemon'
-            value={searchPokemon}
-            onChange={ (e) => setSearchPokemon(e.target.value)}
-          />
-        <RedButton
+      <Pokemon>
+        <input
+          type='text'
+          placeholder='Pokemon'
+          value={searchPokemon}
+          onChange={ (e) => setSearchPokemon(e.target.value.toLowerCase())}
+        />
+        <button
           onClick={() => CatchPocketMonster(searchPokemon)}
         >
           Catch It!
-        </RedButton>
+        </button>
+        </Pokemon>
 
         <h1>Name That Pokemon: {pocketMonster.name}</h1>
         {/* <p> { stats.stats } </p> */}
@@ -51,12 +53,29 @@ const Title = styled.h1`
   text-align: center;
   color: palevioletred;
 `
-const Input = styled.input`
-  border-color: green;
-  text-align: center;
-`
-const RedButton = styled.button`
-  color: tomato;
-  border-color: tomato;
-  text-align: center;
+// const Input = styled.input`
+//   border-color: green;
+//   text-align: center;
+// `
+// const RedButton = styled.button`
+//   color: tomato;
+//   border-color: tomato;
+//   text-align: center;
+// `
+
+const Pokemon = styled.div`
+  input {
+    border-color: green;
+    text-align: center;
+  }
+
+
+  button {
+    color: tomato;
+    border-color: tomato;
+    text-align: center;
+  }
+
+  display: block;
+  margin: center;
 `

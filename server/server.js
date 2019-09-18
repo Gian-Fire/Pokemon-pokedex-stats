@@ -11,6 +11,10 @@ app.get("/pokemon", (req, res) => {
     .then((pokemon) => {
       res.send(pokemon.data)
     })
+    axios.get(pokemon.data.url)
+      .then((pokemon) => {
+        res.send(pokemon.stats)
+      })
     .catch( error => console.log(error))
 });
 
