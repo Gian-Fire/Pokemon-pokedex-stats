@@ -3,21 +3,19 @@ import styled from "styled-components";
 
 function App() {
   const [ searchPokemon, setSearchPokemon ] = useState('');
-  const [ pocketMonster, setPocketMonster ]= useState({});
-
-  // const handleSearch = () => {
-  //   const getPoke = {
-  //     'Pokemon':searchPokemon
-  //   }
-  //   console.log(searchPokemon)
-  //   return getPoke.Pokemon;
-  // };
+  const [ pocketMonster, setPocketMonster ] = useState({});
+  // const [ stats, setStats ] = useStates({});
 
   const CatchPocketMonster = (Catch) => {
-    fetch('/h')
+    fetch('/pokemon')
     .then(res => res.json())
     .then(pokemon => pokemon.results.filter(pocketMonster => pocketMonster.name === Catch))
-    .then(filteredPokemon => setPocketMonster(filteredPokemon))
+    .then(filteredPokemon => setPocketMonster(filteredPokemon[0]))
+    .then(selectedPokemon => selectedPokemon.url)
+    //trying to go into that url then 
+    // do the same but display all stats in the new object
+    // url => new obj. find stats array
+    // then display all stats
     .catch(err => console.log(err));
   };
 
@@ -38,6 +36,11 @@ function App() {
         </RedButton>
 
         <h1>Name That Pokemon: {pocketMonster.name}</h1>
+        {/* <p> { stats.stats } </p> */}
+        {/* There is also an error when first letter is capitalized. All character
+        needs to be lower cased and I think I'll try to get that going.
+         */}
+        
     </>
   );
 };

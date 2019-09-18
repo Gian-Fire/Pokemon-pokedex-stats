@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "build": "NODE_ENV=production parcel build public/src/index.html",
+    "build": "parcel build public/src/index.html",
     "watch": "NODE_ENV=production parcel watch public/src/index.html"
   },
   "keywords": [
