@@ -11,11 +11,15 @@ app.get("/pokemon", (req, res) => {
     .then((pokemon) => {
       res.send(pokemon.data)
     })
-    axios.get(pokemon.data.url)
-      .then((pokemon) => {
-        res.send(pokemon.stats)
-      })
     .catch( error => console.log(error))
+});
+
+app.get('/stats/:id', (req, res) => {
+  const caughtPokemon = req.params.id;
+
+  axios.get(`https://pokeapi.co/api/v2/pokemon/${caughtPokemon}`)
+    .then((pokemon) => res.send(pokemon.data.stats))
+    .catch(err => console.log(err))
 });
 
 module.exports = app;

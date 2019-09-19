@@ -4,19 +4,34 @@ import styled from "styled-components";
 function App() {
   const [ searchPokemon, setSearchPokemon ] = useState('');
   const [ pocketMonster, setPocketMonster ] = useState({});
-  // const [ stats, setStats ] = useStates({});
+  const [ stats, setStats ] = useState([]);
 
   const CatchPocketMonster = (Catch) => {
     fetch('/pokemon')
     .then(res => res.json())
     .then(pokemon => pokemon.results.filter(pocketMonster => pocketMonster.name === Catch))
     .then(filteredPokemon => setPocketMonster(filteredPokemon[0]))
-    // .then(selectedPokemon => selectedPokemon.url)
-    //trying to go into that url then 
-    // do the same but display all stats in the new object
-    // url => new obj. find stats array
-    // then display all stats
     .catch(err => console.log(err));
+    
+    caughtPokemonStats('1');
+  };
+
+  /* TODO:
+
+    - REPLACE HARDCODED '1' in caughtPokemonStats function (line 16) 
+      WITH DYNAMIC VALUE
+    - STYLE PAGE
+
+
+  */
+
+  const caughtPokemonStats = (pokemonID) => {
+    fetch(`/stats/${pokemonID}`)
+      .then(res => res.json())
+      .then( (caughtPokemonData) => {
+        setStats(caughtPokemonData);
+      })
+      .catch(err => console.log(err))
   };
 
   return (
@@ -35,14 +50,28 @@ function App() {
         >
           Catch It!
         </button>
-        </Pokemon>
+      </Pokemon>
 
-        <h1>Name That Pokemon: {pocketMonster.name}</h1>
-        {/* <p> { stats.stats } </p> */}
-        {/* There is also an error when first letter is capitalized. All character
-        needs to be lower cased and I think I'll try to get that going.
-         */}
-        
+      <div>
+
+        <h1>
+          Name That Pokemon: {pocketMonster.name}
+        </h1>
+
+        <ul>
+        {
+          stats.map( (statsList, i) => {
+            return (
+              <li key={i}>
+                <h3>{statsList.stat.name}: </h3>
+                <p>{statsList.base_stat}</p>
+              </li>
+              )
+          })
+        }
+        </ul>
+
+      </div>
     </>
   );
 };
