@@ -11,9 +11,18 @@ function App() {
     .then(res => res.json())
     .then(pokemon => pokemon.results.filter(pocketMonster => pocketMonster.name === Catch))
     .then(filteredPokemon => setPocketMonster(filteredPokemon[0]))
+    // .then(caughtPokemonStats(pocketMonster.url)) <= doesnt work
+
+    // .then(console.log(pocketMonster)) <= doesnt work
+
+    // .then(filteredPokemon => setPocketMonster(console.log(filteredPokemon[0].url)))
+    //  the console above works and gets url
+    //  trying to pass that down to the caught pokemon but it doesnt
     .catch(err => console.log(err));
-    
-    caughtPokemonStats('1');
+
+// console.log(pocketMonster.url);
+    caughtPokemonStats('1'); 
+    // caughtPokemonStats(pocketMonster.url); <= undefined
   };
 
   /* TODO:
@@ -27,6 +36,8 @@ function App() {
 
   const caughtPokemonStats = (pokemonID) => {
     fetch(`/stats/${pokemonID}`)
+    // fetch(pokemonID)
+
       .then(res => res.json())
       .then( (caughtPokemonData) => {
         setStats(caughtPokemonData);
@@ -58,7 +69,13 @@ function App() {
           Name That Pokemon: {pocketMonster.name}
         </h1>
 
-        <ul>
+        {/* <div></div>
+        place sprites here. 
+        got error when i tried to call it due the the sprite being a link to a png
+        */}
+
+
+        <ul> 
         {
           stats.map( (statsList, i) => {
             return (
@@ -96,6 +113,7 @@ const Pokemon = styled.div`
   input {
     border-color: green;
     text-align: center;
+    display:inline-block
   }
 
 
@@ -103,8 +121,10 @@ const Pokemon = styled.div`
     color: tomato;
     border-color: tomato;
     text-align: center;
+    display:inline-block
   }
 
   display: block;
   margin: center;
+  display:inline-block
 `
