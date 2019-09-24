@@ -5,7 +5,7 @@ function App() {
   const [ searchPokemon, setSearchPokemon ] = useState('');
   const [ pocketMonster, setPocketMonster ] = useState({});
   const [ stats, setStats ] = useState([]);
-  const [ sprite, setSprite ] = useState({});
+  const [ sprites, setSprites ] = useState({});
 
   const CatchPocketMonster = (Catch) => {
     fetch('/pokemon')
@@ -15,6 +15,7 @@ function App() {
     .catch(err => console.log(err));
 
     caughtPokemonStats(Catch); 
+    caughtPokemonSprite(Catch)
   };
 
   const caughtPokemonStats = (pokemonName) => {
@@ -26,19 +27,23 @@ function App() {
       .catch(err => console.log(err))
   };
 
-  // const pokemonSprite = (pokeSprite) => {
-  //   fetch()
-  //     .then()
-  //     .then()
-  //     .catch(err => console.log(err));
-  // }
-  
+  const caughtPokemonSprite = (pokemonName) => {
+    fetch(`/sprites/${pokemonName}`)
+    .then(res => res.json())
+    .then((caughtPokemonSprites) => { 
+      setSprites(caughtPokemonSprites);
+    })
+    .catch(err => console.log(err))
+  }
     
     /* TODO:
   
       - STYLE PAGE
   
     */
+
+    console.log(sprites.front_default)
+  
   return (
     <>
       <Title>Pokemon</Title>
@@ -65,11 +70,7 @@ function App() {
           Name That Pokemon: {pocketMonster.name}
         </h1>
 
-        {/* <div>[sprite</div>
-        place sprites here. 
-        got error when i tried to call it due the the sprite being a link to a png
-        */}
-
+        <img src={sprites.front_default}/>
 
         <ul> 
         {

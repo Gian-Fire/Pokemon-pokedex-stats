@@ -14,20 +14,20 @@ app.get("/pokemon", (req, res) => {
     .catch( error => console.log(error))
 });
 
-app.get('/stats/:id', (req, res) => {
-  const caughtPokemon = req.params.id;
+app.get('/stats/:caughtPokemon', (req, res) => {
+  const pokemonStats = req.params.caughtPokemon;
 
-  axios.get(`https://pokeapi.co/api/v2/pokemon/${caughtPokemon}`)
+  axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonStats}`)
     .then((pokemon) => res.send(pokemon.data.stats))
     .catch(err => console.log(err))
 });
 
-// app.get('/sprites', (req, res) => {
-//   const pokeSprite = req.params.id;
+app.get('/sprites/:caughtPokemon', (req, res) => {
+  const pokemonSprite = req.params.caughtPokemon;
 
-//   axios.get(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png`)
-//     .then((pokemon) => res.send(pokemon.data.sprites))
-//     .catch(error => console.log(error))
-// });
+  axios.get(`https://pokeapi.co/api/v2/pokemon-form/${pokemonSprite}`)
+    .then((pokemon) => res.send(pokemon.data.sprites))
+    .catch(error => console.log(error))
+});
 
 module.exports = app;
