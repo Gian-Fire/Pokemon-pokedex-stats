@@ -42,8 +42,6 @@ function App() {
   
     */
 
-    console.log(sprites.front_default)
-  
   return (
     <>
       <Title>Pokemon</Title>
