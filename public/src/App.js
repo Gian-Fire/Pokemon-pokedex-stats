@@ -11,32 +11,19 @@ function App() {
     .then(res => res.json())
     .then(pokemon => pokemon.results.filter(pocketMonster => pocketMonster.name === Catch))
     .then(filteredPokemon => setPocketMonster(filteredPokemon[0]))
-    // .then(caughtPokemonStats(pocketMonster.url)) <= doesnt work
-
-    // .then(console.log(pocketMonster)) <= doesnt work
-
-    // .then(filteredPokemon => setPocketMonster(console.log(filteredPokemon[0].url)))
-    //  the console above works and gets url
-    //  trying to pass that down to the caught pokemon but it doesnt
     .catch(err => console.log(err));
 
-// console.log(pocketMonster.url);
-    caughtPokemonStats('1'); 
-    // caughtPokemonStats(pocketMonster.url); <= undefined
+    caughtPokemonStats(Catch); 
   };
 
   /* TODO:
 
-    - REPLACE HARDCODED '1' in caughtPokemonStats function (line 16) 
-      WITH DYNAMIC VALUE
     - STYLE PAGE
-
 
   */
 
-  const caughtPokemonStats = (pokemonID) => {
-    fetch(`/stats/${pokemonID}`)
-    // fetch(pokemonID)
+  const caughtPokemonStats = (pokemonName) => {
+    fetch(`/stats/${pokemonName}`)
 
       .then(res => res.json())
       .then( (caughtPokemonData) => {
@@ -52,9 +39,11 @@ function App() {
       <Pokemon>
         <input
           type='text'
+          name='pokemonName'
           placeholder='Pokemon'
           value={searchPokemon}
           onChange={ (e) => setSearchPokemon(e.target.value.toLowerCase())}
+          required
         />
         <button
           onClick={() => CatchPocketMonster(searchPokemon)}
