@@ -22,4 +22,12 @@ app.get('/stats/:id', (req, res) => {
     .catch(err => console.log(err))
 });
 
+// app.get('/sprites', (req, res) => {
+//   const pokeSprite = req.params.id;
+
+//   axios.get(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png`)
+//     .then((pokemon) => res.send(pokemon.data.sprites))
+//     .catch(error => console.log(error))
+// });
+
 module.exports = app;

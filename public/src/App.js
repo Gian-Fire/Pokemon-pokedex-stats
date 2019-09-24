@@ -5,6 +5,7 @@ function App() {
   const [ searchPokemon, setSearchPokemon ] = useState('');
   const [ pocketMonster, setPocketMonster ] = useState({});
   const [ stats, setStats ] = useState([]);
+  const [ sprite, setSprite ] = useState({});
 
   const CatchPocketMonster = (Catch) => {
     fetch('/pokemon')
@@ -16,22 +17,28 @@ function App() {
     caughtPokemonStats(Catch); 
   };
 
-  /* TODO:
-
-    - STYLE PAGE
-
-  */
-
   const caughtPokemonStats = (pokemonName) => {
     fetch(`/stats/${pokemonName}`)
-
       .then(res => res.json())
-      .then( (caughtPokemonData) => {
+      .then((caughtPokemonData) => {
         setStats(caughtPokemonData);
       })
       .catch(err => console.log(err))
   };
 
+  // const pokemonSprite = (pokeSprite) => {
+  //   fetch()
+  //     .then()
+  //     .then()
+  //     .catch(err => console.log(err));
+  // }
+  
+    
+    /* TODO:
+  
+      - STYLE PAGE
+  
+    */
   return (
     <>
       <Title>Pokemon</Title>
@@ -58,7 +65,7 @@ function App() {
           Name That Pokemon: {pocketMonster.name}
         </h1>
 
-        {/* <div></div>
+        {/* <div>[sprite</div>
         place sprites here. 
         got error when i tried to call it due the the sprite being a link to a png
         */}
