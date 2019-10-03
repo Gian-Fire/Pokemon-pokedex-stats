@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './styles.css';
 import styled from "styled-components";
 
 function App() {
@@ -7,15 +8,17 @@ function App() {
   const [ stats, setStats ] = useState([]);
   const [ sprites, setSprites ] = useState({});
 
-  const CatchPocketMonster = (Catch) => {
+  const CatchPocketMonster = (Catch, e) => {
+    e.preventDefault();
+
     fetch('/pokemon')
-    .then(res => res.json())
-    .then(pokemon => pokemon.results.filter(pocketMonster => pocketMonster.name === Catch))
-    .then(filteredPokemon => setPocketMonster(filteredPokemon[0]))
-    .catch(err => console.log(err));
+      .then(res => res.json())
+      .then(pokemon => pokemon.results.filter(pocketMonster => pocketMonster.name === Catch))
+      .then(filteredPokemon => setPocketMonster(filteredPokemon[0]))
+      .catch(err => console.log(err));
 
     caughtPokemonStats(Catch); 
-    caughtPokemonSprite(Catch)
+    caughtPokemonSprite(Catch);
   };
 
   const caughtPokemonStats = (pokemonName) => {
@@ -35,53 +38,69 @@ function App() {
     })
     .catch(err => console.log(err))
   }
-    
-    /* TODO:
-  
-      - STYLE PAGE
-  
-    */
 
   return (
     <>
-      <Title>Pokemon</Title>
+      <Title>Pokedex Stat Tracker</Title>
 
-      <Pokemon>
+      <Pokemon
+        onSubmit={(e) => CatchPocketMonster(searchPokemon, e)}
+      >
         <input
           type='text'
           name='pokemonName'
-          placeholder='Pokemon'
+          placeholder='Name That Pokemon!'
           value={searchPokemon}
           onChange={ (e) => setSearchPokemon(e.target.value.toLowerCase())}
           required
         />
         <button
-          onClick={() => CatchPocketMonster(searchPokemon)}
+          type="submit"
         >
-          Catch It!
+          <i>Catch It!</i>
         </button>
       </Pokemon>
 
       <div>
 
-        <h1>
-          Name That Pokemon: {pocketMonster.name}
-        </h1>
+        <Title>
+          {
+            pocketMonster && pocketMonster.name
+              ?
+                pocketMonster.name.charAt(0).toUpperCase() + pocketMonster.name.slice(1)
+              :
+                'Please enter a valid pokemon name.'
+          }
+        </Title>
 
-        <img src={sprites.front_default}/>
+        <Sprite src={sprites.front_default}/>
 
-        <ul> 
-        {
-          stats.map( (statsList, i) => {
-            return (
-              <li key={i}>
-                <h3>{statsList.stat.name}: </h3>
-                <p>{statsList.base_stat}</p>
-              </li>
-              )
-          })
-        }
-        </ul>
+        <Table>
+          <tr>
+            <th>
+              Stat
+            </th>
+            <th>Value</th>
+          </tr>
+            {
+              stats.map( (statsList, i) => {
+                return (
+                  <tr
+                    key={i}
+                  >
+
+                    <td>
+                      {statsList.stat.name} 
+                    </td>
+                    <td>
+                      {statsList.base_stat}
+                    </td>
+
+                  </tr>
+                )
+              })
+            }
+        </Table>
 
       </div>
     </>
@@ -92,34 +111,62 @@ export default App;
 
 const Title = styled.h1`
   text-align: center;
-  color: palevioletred;
-`
-// const Input = styled.input`
-//   border-color: green;
-//   text-align: center;
-// `
-// const RedButton = styled.button`
-//   color: tomato;
-//   border-color: tomato;
-//   text-align: center;
-// `
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+`;
 
-const Pokemon = styled.div`
-  input {
-    border-color: green;
+const Sprite = styled.img`
+  border: 2px solid black;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+`;
+
+const Table = styled.table`
+  th {
+    color: white;
+    font-size: 1.5em;
+    border: 2px solid black;
     text-align: center;
-    display:inline-block
+    margin-left: auto;
+    margin-right: auto;
+    width: 5%
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
+  td {
+    color: white;
+    font-size: 1.75em;
+    border: 2px solid black;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 5%
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+
+  border: 2px solid black;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%
+`;
+
+const Pokemon = styled.form`
+  input {
+    border: 2px solid black;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   button {
-    color: tomato;
-    border-color: tomato;
-    text-align: center;
-    display:inline-block
+    border: 2px solid black;
+    color: black;
+    display: block;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
   }
-
-  display: block;
-  margin: center;
-  display:inline-block
-`
+`;
